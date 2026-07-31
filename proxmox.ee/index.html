@@ -197,6 +197,13 @@
   }
   .btn-primary:hover { background: #4bebce; }
 
+  .btn-secondary {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .btn-secondary:hover { border-color: var(--border-hover); background: var(--bg-raised); }
+
   /* ---------- services grid ---------- */
   .services {
     display: grid;
@@ -314,6 +321,10 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z" opacity="0"/><path d="M4 6l8 6 8-6"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
           <span data-i18n="cta_primary">Talk to an engineer</span>
         </a>
+        <a class="btn btn-secondary" href="https://t.me/ProxMox_EE_bot" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+          <span data-i18n="cta_telegram">Message us on Telegram</span>
+        </a>
       </div>
     </div>
 
@@ -386,6 +397,7 @@
         h1_tail: "We handle the infrastructure, you run the business.",
         subhead: "Deployment, migration, and 24/7 support for Proxmox VE clusters - from single-node setups to multi-node HA environments. Vendor-neutral expertise, hands-on when you need it.",
         cta_primary: "Talk to an engineer",
+        cta_telegram: "Message us on Telegram",
         s1_h: "Deployment & setup",
         s1_p: "Cluster design, storage (ZFS/Ceph), networking, and hardening - built right the first time.",
         s2_h: "VMware migration",
@@ -407,6 +419,7 @@
         h1_tail: "Инфраструктура - на нас, бизнес - на вас.",
         subhead: "Развёртывание, миграция и поддержка 24/7 для кластеров Proxmox VE - от одного узла до отказоустойчивых сред с несколькими узлами. Независимая экспертиза, помощь на месте, когда нужно.",
         cta_primary: "Связаться с инженером",
+        cta_telegram: "Написать в Telegram",
         s1_h: "Развёртывание и настройка",
         s1_p: "Проектирование кластера, хранилище (ZFS/Ceph), сеть и защита - сразу правильно.",
         s2_h: "Миграция с VMware",
@@ -428,6 +441,7 @@
         h1_tail: "Infrastruktuur on meie vastutus, äri on sinu oma.",
         subhead: "Proxmox VE klastrite juurutamine, migratsioon ja 24/7 tugi - ühe sõlme lahendustest mitme sõlmega HA-keskkondadeni. Sõltumatu ekspertiis, vajadusel käed külge.",
         cta_primary: "Räägi insenerga",
+        cta_telegram: "Kirjuta meile Telegramis",
         s1_h: "Juurutamine ja seadistus",
         s1_p: "Klastri disain, salvestus (ZFS/Ceph), võrk ja turvamine - kohe õigesti tehtud.",
         s2_h: "VMware migratsioon",
