@@ -3,54 +3,480 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>proxmox.ee — Coming soon</title>
+<meta name="description" content="Proxmox VE consulting and support - deployment, VMware migration, HA/disaster recovery, 24/7 monitoring, backup, and performance tuning.">
+<title>proxmox.ee - Proxmox VE Support &amp; Consulting</title>
 <style>
-  :root { color-scheme: light dark; }
+  :root {
+    color-scheme: dark;
+    --bg: #0a0d12;
+    --bg-raised: #10141b;
+    --border: #1f2530;
+    --border-hover: #2c3444;
+    --text: #e7ebf1;
+    --text-muted: #8b93a3;
+    --accent: #35e0c2;
+    --accent-dim: #1c8a78;
+    --mono: "SFMono-Regular", "JetBrains Mono", Consolas, "Liberation Mono", Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+
   * { box-sizing: border-box; }
-  body {
+
+  html, body {
+    height: 100%;
     margin: 0;
-    min-height: 100vh;
+  }
+
+  body {
+    font-family: var(--sans);
+    background:
+      radial-gradient(1200px 600px at 85% -10%, rgba(53, 224, 194, 0.08), transparent 60%),
+      var(--bg);
+    color: var(--text);
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  a { color: inherit; }
+
+  .wrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 72rem;
+    width: 100%;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 4vw, 3rem);
+    gap: clamp(1.5rem, 3vh, 2.5rem);
+  }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .brand-mark {
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dim));
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background: #0b0d12;
-    color: #e6e8ec;
-    text-align: center;
-    padding: 2rem;
+    color: #05130f;
+    flex-shrink: 0;
   }
-  .card {
-    max-width: 32rem;
-  }
-  h1 {
-    font-size: clamp(1.5rem, 4vw, 2.25rem);
-    font-weight: 600;
-    margin: 0 0 0.75rem;
-    letter-spacing: -0.02em;
-  }
-  p {
-    margin: 0;
-    color: #9aa1ac;
-    font-size: 1rem;
-  }
-  .badge {
-    display: inline-block;
-    margin-bottom: 1.25rem;
-    padding: 0.3rem 0.75rem;
+  .brand-mark svg { width: 1rem; height: 1rem; }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
     border-radius: 999px;
-    border: 1px solid #2a2f3a;
-    color: #9aa1ac;
-    font-size: 0.75rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+  }
+  .status-dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(53, 224, 194, 0.15);
+  }
+
+  .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .lang-switch {
+    display: inline-flex;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.2rem;
+    gap: 0.15rem;
+  }
+  .lang-btn {
+    appearance: none;
+    border: none;
+    background: transparent;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.03em;
+    padding: 0.3rem 0.55rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 150ms ease, color 150ms ease;
+  }
+  .lang-btn:hover { color: var(--text); }
+  .lang-btn[aria-pressed="true"] {
+    background: var(--accent);
+    color: #05130f;
+  }
+
+  /* ---------- hero ---------- */
+  .hero {
+    display: grid;
+    gap: 0.9rem;
+    max-width: 46rem;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    color: var(--accent);
     letter-spacing: 0.08em;
     text-transform: uppercase;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(1.9rem, 4vw, 3rem);
+    line-height: 1.08;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+  }
+
+  .h1-tail { color: var(--text-muted); font-weight: 500; }
+
+  .subhead {
+    margin: 0;
+    max-width: 40rem;
+    color: var(--text-muted);
+    font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+    line-height: 1.55;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.15rem;
+    border-radius: 0.6rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+  }
+  .btn:active { transform: scale(0.97); }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #05130f;
+  }
+  .btn-primary:hover { background: #4bebce; }
+
+  .btn-secondary {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text);
+  }
+  .btn-secondary:hover { border-color: var(--border-hover); background: var(--bg-raised); }
+
+  /* ---------- services grid ---------- */
+  .services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.9rem;
+  }
+
+  .card {
+    background: var(--bg-raised);
+    border: 1px solid var(--border);
+    border-radius: 0.85rem;
+    padding: 1.1rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: border-color 150ms ease, transform 150ms ease;
+  }
+  .card:hover { border-color: var(--border-hover); transform: translateY(-2px); }
+
+  .card-icon {
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 0.55rem;
+    background: rgba(53, 224, 194, 0.1);
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .card-icon svg { width: 1.15rem; height: 1.15rem; }
+
+  .card h3 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  /* ---------- footer / contact ---------- */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+  }
+
+  .footer-contact {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+  }
+
+  @media (max-width: 900px) {
+    .services { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    body { min-height: auto; }
+    .services { grid-template-columns: 1fr; }
+    .footer { flex-direction: column; align-items: flex-start; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card, .btn { transition: none; }
   }
 </style>
 </head>
 <body>
-  <div class="card">
-    <span class="badge">Coming soon</span>
-    <h1>proxmox.ee</h1>
-    <p>This site is being prepared. Check back soon.</p>
+  <div class="wrap">
+
+    <div class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="1.5"/><rect x="3" y="13" width="18" height="7" rx="1.5"/><circle cx="7" cy="7.5" r="0.6" fill="currentColor" stroke="none"/><circle cx="7" cy="16.5" r="0.6" fill="currentColor" stroke="none"/></svg>
+        </span>
+        proxmox.ee
+      </div>
+      <div class="topbar-right">
+        <span class="status-pill">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span data-i18n="status">Independent Proxmox VE specialists</span>
+        </span>
+        <div class="lang-switch" role="group" aria-label="Language">
+          <button class="lang-btn" type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button class="lang-btn" type="button" data-lang="ru" aria-pressed="false">RU</button>
+          <button class="lang-btn" type="button" data-lang="et" aria-pressed="false">ET</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero">
+      <p class="eyebrow" data-i18n="eyebrow">Proxmox VE · Consulting &amp; Support</p>
+      <h1><span data-i18n="h1_lead">Run Proxmox with confidence.</span> <span class="h1-tail" data-i18n="h1_tail">We handle the infrastructure, you run the business.</span></h1>
+      <p class="subhead" data-i18n="subhead">
+        Deployment, migration, and 24/7 support for Proxmox VE clusters - from single-node
+        setups to multi-node HA environments. Vendor-neutral expertise, hands-on when you need it.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:hello@proxmox.ee">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v16H4z" opacity="0"/><path d="M4 6l8 6 8-6"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+          <span data-i18n="cta_primary">Talk to an engineer</span>
+        </a>
+        <a class="btn btn-secondary" href="#services">
+          <span data-i18n="cta_secondary">View services</span>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="services" id="services">
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </span>
+        <h3 data-i18n="s1_h">Deployment &amp; setup</h3>
+        <p data-i18n="s1_p">Cluster design, storage (ZFS/Ceph), networking, and hardening - built right the first time.</p>
+      </div>
+
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2l4 4-4 4"/><path d="M3 12v-2a4 4 0 0 1 4-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 12v2a4 4 0 0 1-4 4H3"/></svg>
+        </span>
+        <h3 data-i18n="s2_h">VMware migration</h3>
+        <p data-i18n="s2_p">Structured VM-to-Proxmox migration with minimal downtime and a tested rollback plan.</p>
+      </div>
+
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.4 8.4-8 10-4.6-1.6-8-5-8-10V6l8-4z"/></svg>
+        </span>
+        <h3 data-i18n="s3_h">HA &amp; disaster recovery</h3>
+        <p data-i18n="s3_p">Fencing, quorum, and replication configured so a node failure doesn't become an outage.</p>
+      </div>
+
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+        </span>
+        <h3 data-i18n="s4_h">24/7 monitoring</h3>
+        <p data-i18n="s4_p">Proactive alerting on host, storage, and VM health - issues caught before users notice.</p>
+      </div>
+
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8a9 9 0 1 0 0 8"/><path d="M21 3v5h-5"/></svg>
+        </span>
+        <h3 data-i18n="s5_h">Backup solutions</h3>
+        <p data-i18n="s5_p">Proxmox Backup Server design with verified restores - not just scheduled jobs.</p>
+      </div>
+
+      <div class="card">
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h8l-1 8 11-14h-8l1-8z"/></svg>
+        </span>
+        <h3 data-i18n="s6_h">Performance tuning</h3>
+        <p data-i18n="s6_p">CPU/memory pinning, storage I/O, and network throughput tuned for your workload.</p>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span data-i18n="footer_disclaimer">&copy; 2026 proxmox.ee - independent Proxmox VE consulting, not affiliated with Proxmox Server Solutions GmbH.</span>
+      <span class="footer-contact">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l8 6 8-6"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg>
+        <a href="mailto:hello@proxmox.ee">hello@proxmox.ee</a>
+      </span>
+    </div>
+
   </div>
+
+  <script>
+    var STRINGS = {
+      en: {
+        status: "Independent Proxmox VE specialists",
+        eyebrow: "Proxmox VE · Consulting & Support",
+        h1_lead: "Run Proxmox with confidence.",
+        h1_tail: "We handle the infrastructure, you run the business.",
+        subhead: "Deployment, migration, and 24/7 support for Proxmox VE clusters - from single-node setups to multi-node HA environments. Vendor-neutral expertise, hands-on when you need it.",
+        cta_primary: "Talk to an engineer",
+        cta_secondary: "View services",
+        s1_h: "Deployment & setup",
+        s1_p: "Cluster design, storage (ZFS/Ceph), networking, and hardening - built right the first time.",
+        s2_h: "VMware migration",
+        s2_p: "Structured VM-to-Proxmox migration with minimal downtime and a tested rollback plan.",
+        s3_h: "HA & disaster recovery",
+        s3_p: "Fencing, quorum, and replication configured so a node failure doesn't become an outage.",
+        s4_h: "24/7 monitoring",
+        s4_p: "Proactive alerting on host, storage, and VM health - issues caught before users notice.",
+        s5_h: "Backup solutions",
+        s5_p: "Proxmox Backup Server design with verified restores - not just scheduled jobs.",
+        s6_h: "Performance tuning",
+        s6_p: "CPU/memory pinning, storage I/O, and network throughput tuned for your workload.",
+        footer_disclaimer: "© 2026 proxmox.ee - independent Proxmox VE consulting, not affiliated with Proxmox Server Solutions GmbH."
+      },
+      ru: {
+        status: "Независимые специалисты по Proxmox VE",
+        eyebrow: "Proxmox VE · Консалтинг и поддержка",
+        h1_lead: "Работайте с Proxmox уверенно.",
+        h1_tail: "Инфраструктура - на нас, бизнес - на вас.",
+        subhead: "Развёртывание, миграция и поддержка 24/7 для кластеров Proxmox VE - от одного узла до отказоустойчивых сред с несколькими узлами. Независимая экспертиза, помощь на месте, когда нужно.",
+        cta_primary: "Связаться с инженером",
+        cta_secondary: "Смотреть услуги",
+        s1_h: "Развёртывание и настройка",
+        s1_p: "Проектирование кластера, хранилище (ZFS/Ceph), сеть и защита - сразу правильно.",
+        s2_h: "Миграция с VMware",
+        s2_p: "Структурированная миграция VM на Proxmox с минимальным простоем и проверенным планом отката.",
+        s3_h: "Отказоустойчивость и восстановление",
+        s3_p: "Fencing, кворум и репликация настроены так, чтобы отказ узла не стал простоем.",
+        s4_h: "Мониторинг 24/7",
+        s4_p: "Проактивные уведомления о состоянии узлов, хранилища и VM - проблемы находят раньше пользователей.",
+        s5_h: "Резервное копирование",
+        s5_p: "Настройка Proxmox Backup Server с проверенным восстановлением, а не просто задачами по расписанию.",
+        s6_h: "Оптимизация производительности",
+        s6_p: "Привязка CPU/памяти, I/O хранилища и пропускная способность сети настроены под вашу нагрузку.",
+        footer_disclaimer: "© 2026 proxmox.ee - независимый консалтинг по Proxmox VE, не связан с Proxmox Server Solutions GmbH."
+      },
+      et: {
+        status: "Sõltumatud Proxmox VE spetsialistid",
+        eyebrow: "Proxmox VE · Konsultatsioon ja tugi",
+        h1_lead: "Kasuta Proxmoxi kindlalt.",
+        h1_tail: "Infrastruktuur on meie vastutus, äri on sinu oma.",
+        subhead: "Proxmox VE klastrite juurutamine, migratsioon ja 24/7 tugi - ühe sõlme lahendustest mitme sõlmega HA-keskkondadeni. Sõltumatu ekspertiis, vajadusel käed külge.",
+        cta_primary: "Räägi insenerga",
+        cta_secondary: "Vaata teenuseid",
+        s1_h: "Juurutamine ja seadistus",
+        s1_p: "Klastri disain, salvestus (ZFS/Ceph), võrk ja turvamine - kohe õigesti tehtud.",
+        s2_h: "VMware migratsioon",
+        s2_p: "Struktureeritud VM migratsioon Proxmoxile minimaalse seisakuga ja testitud tagasipöördumisplaaniga.",
+        s3_h: "HA ja avariitaaste",
+        s3_p: "Fencing, kvoorum ja replikatsioon seadistatud nii, et sõlme rike ei muutu katkestuseks.",
+        s4_h: "24/7 jälgimine",
+        s4_p: "Proaktiivsed hoiatused hosti, salvestuse ja VM-ide seisundi kohta - probleemid leitakse enne kasutajaid.",
+        s5_h: "Varunduslahendused",
+        s5_p: "Proxmox Backup Serveri disain koos kontrollitud taastamisega, mitte ainult ajastatud tööd.",
+        s6_h: "Jõudluse häälestus",
+        s6_p: "CPU/mälu sidumine, salvestuse I/O ja võrgu läbilaskevõime häälestatud sinu koormusele.",
+        footer_disclaimer: "© 2026 proxmox.ee - sõltumatu Proxmox VE konsultatsioon, ei ole seotud Proxmox Server Solutions GmbH-ga."
+      }
+    };
+
+    function applyLang(lang) {
+      var dict = STRINGS[lang] || STRINGS.en;
+      document.querySelectorAll("[data-i18n]").forEach(function (el) {
+        var key = el.getAttribute("data-i18n");
+        if (dict[key]) el.textContent = dict[key];
+      });
+      document.querySelectorAll(".lang-btn").forEach(function (btn) {
+        btn.setAttribute("aria-pressed", btn.getAttribute("data-lang") === lang ? "true" : "false");
+      });
+      document.documentElement.setAttribute("lang", lang);
+      try { localStorage.setItem("proxmox-lang", lang); } catch (e) {}
+    }
+
+    document.querySelectorAll(".lang-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () { applyLang(btn.getAttribute("data-lang")); });
+    });
+
+    var saved = null;
+    try { saved = localStorage.getItem("proxmox-lang"); } catch (e) {}
+    var browserLang = (navigator.language || "en").slice(0, 2);
+    var initial = saved || (STRINGS[browserLang] ? browserLang : "en");
+    applyLang(initial);
+  </script>
 </body>
 </html>
