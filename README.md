@@ -10,6 +10,7 @@ Placeholder "coming soon" pages for domains being migrated from zone.ee to Hetzn
 - servicehub.ee
 - bidhub.ee
 - procurement.ee
+- shevtsuk.com
 
 ## Adding a real site later
 
