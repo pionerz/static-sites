@@ -65,20 +65,24 @@
   }
 
   h1 {
-    font-size: clamp(1.1rem, 3.4vw, 2.35rem);
+    font-size: clamp(1.3rem, 2.6vw, 2.1rem);
     font-weight: 500;
     font-style: italic;
     margin: 0 0 0.6rem;
     letter-spacing: -0.01em;
-    line-height: 1.25;
+    line-height: 1.3;
     color: #e6e8ec;
-    white-space: nowrap;
   }
+  h1::before { content: "\201C"; }
+  h1::after { content: "\201D"; }
 
   .attribution {
     font-size: 0.85rem;
     color: #6b7280;
     margin: 0 0 2rem;
+  }
+  .attribution:empty {
+    margin: 0 0 1.4rem;
   }
 
   p {
@@ -131,7 +135,6 @@
       padding: 1.5rem clamp(1.5rem, 6vw, 3rem) 2.5rem;
       text-align: center;
     }
-    h1 { white-space: normal; }
   }
 </style>
 </head>
@@ -141,10 +144,55 @@
   </div>
   <div class="content">
     <div class="quote-block">
-      <h1>"Constantly think about how you could be doing things better."</h1>
-      <p class="attribution">- Elon Musk</p>
+      <h1 id="quote"></h1>
+      <p class="attribution" id="attribution"></p>
     </div>
     <p class="contact">If you need to reach me, you already know how.</p>
   </div>
+
+  <script>
+    var QUOTES = [
+      { text: "When something is important enough, you do it even if the odds are not in your favor.", by: "Elon Musk" },
+      { text: "Persistence is very important. You should not give up unless you are forced to give up.", by: "Elon Musk" },
+      { text: "Failure is an option here. If things are not failing, you are not innovating enough.", by: "Elon Musk" },
+      { text: "I think it is possible for ordinary people to choose to be extraordinary.", by: "Elon Musk" },
+      { text: "Take risks now and do something bold.", by: "Elon Musk" },
+      { text: "Constantly think about how you could be doing things better.", by: "Elon Musk" },
+      { text: "Make it happen." },
+      { text: "Stay hungry. Stay foolish." },
+      { text: "Nothing changes if nothing changes." },
+      { text: "Difficult roads lead to beautiful places." },
+      { text: "Dream big. Start small." },
+      { text: "Do it scared." },
+      { text: "Your future needs you. Your past doesn't." },
+      { text: "Be stronger than your excuses." },
+      { text: "Small steps still move you forward." },
+      { text: "Focus on progress, not perfection." },
+      { text: "You become what you believe." },
+      { text: "Growth begins outside your comfort zone." },
+      { text: "If you want different results, make different choices." },
+      { text: "Don't fear failure. Fear never trying." },
+      { text: "One day or day one. You decide." },
+      { text: "The best way out is always through." },
+      { text: "Your direction matters more than your speed." },
+      { text: "A clear mind makes better choices." },
+      { text: "You don't need permission to grow." },
+      { text: "What you do today shapes who you become tomorrow." },
+      { text: "Discipline takes you where motivation cannot." },
+      { text: "Sometimes you win. Sometimes you learn." },
+      { text: "Don't wait for opportunity. Create it." },
+      { text: "A bad day is not a bad life." },
+      { text: "You can't change the past, but you can change the next step." },
+      { text: "Comfort feels good, but it rarely creates anything great." },
+      { text: "Your only limit is the one you accept." },
+      { text: "Stop waiting. Start building." },
+      { text: "The future belongs to those who prepare for it." },
+      { text: "Believe less in luck and more in action." }
+    ];
+
+    var pick = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    document.getElementById("quote").textContent = pick.text;
+    document.getElementById("attribution").textContent = pick.by ? "- " + pick.by : "";
+  </script>
 </body>
 </html>
