@@ -154,12 +154,25 @@
 
 
   ];
+  var chosenImageURL = null;
   function getImageTag() {
-    var img = '<img src=\"';
+    var img = '<img class=\"reveal-img\" src=\"';
     var randomIndex = Math.floor(Math.random() * imageURLs.length);
-    img += imageURLs[randomIndex];
+    chosenImageURL = imageURLs[randomIndex];
+    img += chosenImageURL;
     img += '\" alt=\"Some alt text\"/>';
     return img;
+  }
+  function shareOnFacebook() {
+    var absoluteImageURL = new URL(chosenImageURL, window.location.href).href;
+    // mobile: hand off to the OS share sheet (Facebook app if installed, plus
+    // WhatsApp/Telegram/etc) - far more natural than a desktop-style popup
+    if (navigator.share) {
+      navigator.share({ url: absoluteImageURL }).catch(function () {});
+      return;
+    }
+    var shareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(absoluteImageURL);
+    window.open(shareURL, '_blank', 'noopener');
   }
 </script>
 <meta data-n-head="ssr" charset="utf-8">
@@ -285,6 +298,27 @@
 		margin-left: auto;
 		margin-right: auto;
       }
+
+      .reveal-img {
+        opacity: 0;
+        transform: scale(0.92) translateY(12px);
+        animation: revealIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      @keyframes revealIn {
+        to {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .reveal-img {
+          animation: none;
+          opacity: 1;
+          transform: none;
+        }
+      }
 	  
 	 .gif img {
 		width:128px;
@@ -344,6 +378,12 @@
   document.write(getImageTag());
 </script>
 
+    </div>
+
+    <div style="text-align: center; margin-top: 20px;">
+      <button type="button" class="button" onclick="shareOnFacebook()" style="border:none; font-family: Arial, sans-serif;">
+        Поделиться в Facebook
+      </button>
     </div>
 
   
