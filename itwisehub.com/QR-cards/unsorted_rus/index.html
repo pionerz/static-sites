@@ -154,25 +154,12 @@
 
 
   ];
-  var chosenImageURL = null;
   function getImageTag() {
     var img = '<img class=\"reveal-img\" src=\"';
     var randomIndex = Math.floor(Math.random() * imageURLs.length);
-    chosenImageURL = imageURLs[randomIndex];
-    img += chosenImageURL;
+    img += imageURLs[randomIndex];
     img += '\" alt=\"Some alt text\"/>';
     return img;
-  }
-  function shareOnFacebook() {
-    var absoluteImageURL = new URL(chosenImageURL, window.location.href).href;
-    // mobile: hand off to the OS share sheet (Facebook app if installed, plus
-    // WhatsApp/Telegram/etc) - far more natural than a desktop-style popup
-    if (navigator.share) {
-      navigator.share({ url: absoluteImageURL }).catch(function () {});
-      return;
-    }
-    var shareURL = 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(absoluteImageURL);
-    window.open(shareURL, '_blank', 'noopener');
   }
 </script>
 <meta data-n-head="ssr" charset="utf-8">
@@ -380,13 +367,7 @@
 
     </div>
 
-    <div style="text-align: center; margin-top: 20px;">
-      <button type="button" class="button" onclick="shareOnFacebook()" style="border:none; font-family: Arial, sans-serif;">
-        Поделиться в Facebook
-      </button>
-    </div>
 
-  
 
   </body>
 </html>
